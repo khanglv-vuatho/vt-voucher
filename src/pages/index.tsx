@@ -76,6 +76,7 @@ const Index = () => {
       setIsFetching(false)
     }
   }, [])
+
   const handleAddVoucherApi = useCallback(async () => {
     if (selectedVoucherId === null) return
     try {
@@ -121,16 +122,7 @@ const Index = () => {
         return [...prevId, id] // Otherwise, add new id to selection array
       })
     }
-    handleSelectVoucherApi(id)
-  }, [])
-
-  const handleSelectVoucherApi = useCallback(async (id: number) => {
-    try {
-      const data = await handleAddVoucher(id)
-      console.log({ data })
-    } catch (error) {
-      console.log(error)
-    }
+    setIsAddingVoucher(true)
   }, [])
 
   const handleCloseWebview = () => {

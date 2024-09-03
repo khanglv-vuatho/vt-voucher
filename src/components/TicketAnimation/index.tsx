@@ -7,30 +7,28 @@ const TicketAnimation = () => {
 
   useEffect(() => {
     const animateTicket = async () => {
-      await controls.start({ y: -40, opacity: 1 })
+      await controls.start({ y: -40 })
       await controls.start({ y: -100, opacity: 0 })
     }
     animateTicket()
   }, [controls])
 
   return (
-    <motion.div
-      initial={{ y: -20, opacity: 0 }}
-      animate={controls}
-      transition={{ duration: 0.3 }}
-      className='absolute inset-0 top-1/2 z-50 grid h-[25px] w-10 grid-cols-3 items-center justify-center gap-0.5 overflow-hidden rounded-e-lg bg-white'
-    >
-      <div className='relative size-full bg-primary-yellow'>
-        <div
-          style={{
-            borderLeft: `${WITDH_OF_BORDER_DOTS}px dotted #fff`,
-            transform: `translateY(${WITDH_OF_BORDER_DOTS}px) translateX(-${WITDH_OF_BORDER_DOTS / 2}px)`,
-            height: `calc(100% - ${PADDING_OF_TICKET_DETAIL}px)`
-          }}
-          className={`absolute inset-0`}
-        />
+    <motion.div initial={{ y: -20, x: -14, zIndex: 60 }} animate={controls} transition={{ duration: 0.3 }} className='absolute flex items-center gap-1'>
+      <p className='font-bold text-primary-blue'>+</p>
+      <div className='inset-0 top-1/2 z-50 grid h-[25px] w-10 grid-cols-3 items-center justify-center gap-0.5 overflow-hidden rounded-e-lg bg-white'>
+        <div className='relative size-full bg-primary-yellow'>
+          <div
+            style={{
+              borderLeft: `${WITDH_OF_BORDER_DOTS}px dotted #fff`,
+              transform: `translateY(${WITDH_OF_BORDER_DOTS}px) translateX(-${WITDH_OF_BORDER_DOTS / 2}px)`,
+              height: `calc(100% - ${PADDING_OF_TICKET_DETAIL}px)`
+            }}
+            className={`absolute inset-0`}
+          />
+        </div>
+        <div className='col-span-2 flex size-full items-center justify-center bg-primary-yellow text-sm text-white'>%</div>
       </div>
-      <div className='col-span-2 flex size-full items-center justify-center bg-primary-yellow text-sm text-white'>%</div>
     </motion.div>
   )
 }
