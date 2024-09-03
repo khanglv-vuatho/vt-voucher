@@ -97,7 +97,7 @@ const Index = () => {
     setIsFetching(true)
   }, [])
 
-  // add voucher
+  // add some voucher
   useEffect(() => {
     setIsFetching(true)
   }, [])
