@@ -13,12 +13,13 @@ type VoucherItemProps = {
   id: number
   selected: number | number[] | null
   onSelect: (id: number) => void
+  isReadOnlyMode: boolean
 }
 
-const VoucherItem = ({ thumbnail, description, expiryDate, title, id, selected, onSelect }: VoucherItemProps) => {
+const VoucherItem = ({ thumbnail, description, expiryDate, title, id, selected, onSelect, isReadOnlyMode }: VoucherItemProps) => {
   const isHaveSelected = selected !== null
 
-  const isSelected = Array.isArray(selected) ? selected.includes(id) : selected === id
+  const isSelected = Array.isArray(selected) ? selected?.includes(id) : selected === id
 
   return (
     <div onClick={() => onSelect(id)} className={`flex w-full items-center rounded-e-lg shadow-[8px_8px_16px_0px_#00000014] transition ${!isSelected && isHaveSelected ? 'opacity-50' : ''}`}>
@@ -45,9 +46,11 @@ const VoucherItem = ({ thumbnail, description, expiryDate, title, id, selected, 
           <p className='text-xs text-primary-gray'>Hết hạn sau: {expiryDate}</p>
         </div>
         <div className='relative'>
-          <ButtonOnlyIcon onClick={() => onSelect(id)} disableAnimation>
-            {isSelected ? <TickCircle size={24} variant='Bold' className='text-primary-green' /> : <AddCircle size={24} className='text-primary-gray' />}
-          </ButtonOnlyIcon>
+          {!isReadOnlyMode && (
+            <ButtonOnlyIcon onClick={() => onSelect(id)} disableAnimation>
+              {isSelected ? <TickCircle size={24} variant='Bold' className='text-primary-green' /> : <AddCircle size={24} className='text-primary-gray' />}
+            </ButtonOnlyIcon>
+          )}
           {isSelected && <TicketAnimation />}
         </div>
       </div>

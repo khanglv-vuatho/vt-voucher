@@ -62,7 +62,8 @@ const Index = () => {
   const [selectedVoucherId, setSelectedVoucherId] = useState<number | number[] | null>(null)
   const [isFetching, setIsFetching] = useState(false)
   const [isAddingVoucher, setIsAddingVoucher] = useState(false)
-
+  const queryParams = new URLSearchParams(location.search)
+  const isReadOnlyMode = !!queryParams.get('orderId')
   // This function has been moved to the APIs file
   const handleFetchVoucher = useCallback(async () => {
     try {
@@ -107,6 +108,7 @@ const Index = () => {
 
   // Function to handle voucher selection
   const handleSelectVoucher = useCallback((id: number) => {
+    if (isReadOnlyMode) return
     if (fakeData?.multiMode === MULTI_MODE.SINGLE) {
       // In single mode, toggle selection of the voucher
       setSelectedVoucherId((prevId) => (id === prevId ? null : id))
@@ -152,7 +154,7 @@ const Index = () => {
         {isFetching ? (
           Array.from({ length: 5 }).map((_, index) => <SkeletonVoucherItem key={index} />)
         ) : !!voucherData?.length ? (
-          voucherData?.map((item) => <VoucherItem key={item?.id} {...item} selected={selectedVoucherId} onSelect={() => handleSelectVoucher(item?.id)} />)
+          voucherData?.map((item) => <VoucherItem key={item?.id} {...item} isReadOnlyMode={isReadOnlyMode} selected={selectedVoucherId} onSelect={() => handleSelectVoucher(item?.id)} />)
         ) : (
           <div className='flex flex-col items-center justify-center gap-2'>
             <ImageFallback src={'./no-voucher.png'} alt='no-voucher' width={200} height={200} />
