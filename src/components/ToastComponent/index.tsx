@@ -13,7 +13,6 @@ type ToastComponentProps = {
 
 const ToastComponent = ({ message, autoClose, hideProgressBar, closeOnClick, pauseOnHover, draggable, type, ...props }: ToastComponentProps) => {
   const toastId = message // Use message as the ID or generate a unique ID
-
   if (!toast.isActive(toastId)) {
     toast(message, {
       toastId,

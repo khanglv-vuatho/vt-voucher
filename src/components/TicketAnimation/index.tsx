@@ -15,8 +15,8 @@ const TicketAnimation = () => {
 
   return (
     <motion.div initial={{ y: -20, x: -14, zIndex: 60 }} animate={controls} transition={{ duration: 0.3 }} className='absolute flex items-center gap-1'>
-      <p className='font-bold text-primary-blue'>+</p>
-      <div className='inset-0 top-1/2 z-50 grid h-[25px] w-10 grid-cols-3 items-center justify-center gap-0.5 overflow-hidden rounded-e-lg bg-white'>
+      <p className='text-primary-blue'>+</p>
+      <div className='inset-0 top-1/2 z-50 grid h-[25px] w-[35px] grid-cols-3 items-center justify-center gap-0.5 overflow-hidden rounded-e-lg bg-white'>
         <div className='relative size-full bg-primary-yellow'>
           <div
             style={{

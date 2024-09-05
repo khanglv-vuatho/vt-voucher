@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom'
 
-import IndexPage from '@/pages/index'
+import Home from '@/pages/index'
 import InvalidPage from './pages/invalid'
 
 const routes = [
-  { path: '/', element: <IndexPage /> },
+  { path: '/', element: <Home /> },
   { path: '/invalid', element: <InvalidPage /> }
 ]
 

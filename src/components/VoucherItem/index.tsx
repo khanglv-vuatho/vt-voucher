@@ -4,6 +4,7 @@ import { ButtonOnlyIcon } from '../Buttons'
 import ImageFallback from '../ImageFallback'
 import { PADDING_OF_TICKET_DETAIL, WITDH_OF_BORDER_DOTS } from '@/constants'
 import TicketAnimation from '../TicketAnimation'
+import ImageCustom from '../ImageCustom'
 
 type VoucherItemProps = {
   thumbnail: string
@@ -34,7 +35,7 @@ const VoucherItem = ({ thumbnail, description, expiryDate, title, id, selected, 
           className={`absolute inset-0 z-50`}
         />
         {/* Voucher image  */}
-        <ImageFallback height={84} width={84} src={thumbnail} alt={thumbnail} className='size-[84px] max-h-[84px] min-h-[84px] min-w-[84px] max-w-[84px] object-cover' />
+        <ImageCustom height={84} width={84} src={thumbnail} alt={thumbnail} className='size-[84px] max-h-[84px] min-h-[84px] min-w-[84px] max-w-[84px] object-cover' />
       </div>
       {/* Voucher content  */}
       <div className={`flex size-full items-center justify-between gap-2 rounded-e-lg bg-white px-3 py-2`}>
