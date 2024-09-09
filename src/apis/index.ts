@@ -1,8 +1,11 @@
 import instance from '@/services/axiosConfig'
 
-const getVouchers = async () => {
+const getVouchers = async ({ orderId, searchValue }: { orderId: number; searchValue?: string }) => {
   try {
-    const { data } = await instance.get('/voucher')
+    const params = searchValue ? { code: searchValue } : undefined
+    const { data } = await instance.get(`/vouchers/available/${orderId}`, {
+      params
+    })
     return data
   } catch (error) {
     console.error('Error fetching vouchers:', error)
@@ -10,10 +13,11 @@ const getVouchers = async () => {
   }
 }
 
-const handleAddVoucher = async (id: number | number[]) => {
+const handleAddVoucher = async ({ orderId, id, status }: { orderId: number; id: number | number[]; status: 0 | 1 }) => {
   try {
-    const { data } = await instance.post('/voucher/add', {
-      voucherId: id
+    const { data } = await instance.put(`/booking/voucher/${orderId}`, {
+      voucher_id: id,
+      status
     })
     return data
   } catch (error) {

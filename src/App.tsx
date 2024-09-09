@@ -1,11 +1,13 @@
 import { Route, Routes } from 'react-router-dom'
 
 import Home from '@/pages/index'
-import InvalidPage from './pages/invalid'
+import InvalidPage from '@/pages/invalid'
+import Test from './pages/test'
 
 const routes = [
   { path: '/', element: <Home /> },
-  { path: '/invalid', element: <InvalidPage /> }
+  { path: '/invalid', element: <InvalidPage /> },
+  { path: '/test', element: <Test /> }
 ]
 
 function App() {

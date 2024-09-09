@@ -1,5 +1,5 @@
 import { PADDING_OF_TICKET_DETAIL, WITDH_OF_BORDER_DOTS } from '@/constants'
-import { memo, useEffect } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { motion, useAnimation } from 'framer-motion'
 
 const TicketAnimation = () => {
@@ -7,8 +7,8 @@ const TicketAnimation = () => {
 
   useEffect(() => {
     const animateTicket = async () => {
-      await controls.start({ y: -40 })
-      await controls.start({ y: -100, opacity: 0 })
+      await controls?.start({ y: -40 })
+      await controls?.start({ y: -100, opacity: 0 })
     }
     animateTicket()
   }, [controls])
