@@ -1,7 +1,8 @@
 const keyPossmessage = {
   FINISHED_TEST: 'finishedTest',
   CAN_POP: 'canPop',
-  DIRECT_TO_EKYC: 'directToEkyc'
+  DIRECT_TO_EKYC: 'directToEkyc',
+  VOUCHER_ADDED: 'voucherAdded'
 }
 
 const MULTI_MODE = {

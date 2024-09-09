@@ -2,6 +2,7 @@ import { getVouchers, handleAddVoucher } from '@/apis'
 import { ButtonOnlyIcon } from '@/components/Buttons'
 import ImageFallback from '@/components/ImageFallback'
 import SkeletonVoucherItem from '@/components/SkeletonVoucherItem'
+import ToastComponent from '@/components/ToastComponent'
 import VoucherItem from '@/components/VoucherItem'
 import { keyPossmessage, STATUS_OF_VOUCHER_APPLY } from '@/constants'
 import { Coupon } from '@/types'
@@ -27,13 +28,16 @@ const Home = () => {
     try {
       const data = await getVouchers({ orderId })
 
-      const isItemSelected = data.find((item: Coupon) => item.is_selected == true)
+      const isItemSelected = data.find((item: Coupon) => item.is_selected === true)
 
-      if (!!isItemSelected) {
+      if (isItemSelected) {
         setSelectedVoucherId(isItemSelected.id)
+        // Move the selected item to the beginning of the array
+        const reorderedData = [isItemSelected, ...data.filter((item: Coupon) => item.id !== isItemSelected.id)]
+        setVoucherData(reorderedData)
+      } else {
+        setVoucherData(data)
       }
-
-      setVoucherData(data)
     } catch (error) {
       console.log(error)
     } finally {
@@ -65,8 +69,24 @@ const Home = () => {
     })
   }, [])
 
+  console.log({ selectedVoucherId, preSelectedId })
+  const handleToastVoucherAdded = () => {
+    ToastComponent({
+      message: 'Voucher đã được sử dụng',
+      type: 'info'
+    })
+  }
   // search voucher
   const handleSearch = () => {
+    if (searchValue === '') return
+    const isItemSelected = voucherData?.find((item: Coupon) => item.is_selected == true)
+
+    if (searchValue === isItemSelected?.code) {
+      setSelectedVoucherId(isItemSelected?.id)
+      setPreSelectedId(null)
+      console.log('123')
+      return handleToastVoucherAdded()
+    }
     setIsSearching(true)
   }
 
@@ -112,8 +132,12 @@ const Home = () => {
   const handleToggleApplyVoucher = () => {
     const isItemSelected = voucherData?.find((item: Coupon) => item.is_selected == true)
 
+    if (selectedVoucherId === isItemSelected?.id) return handleToastVoucherAdded()
+
     if (!!isItemSelected && preSelectedId === null) {
-      handleCloseWebview()
+      postMessage({
+        type: keyPossmessage.VOUCHER_ADDED
+      })
     } else {
       setIsAddingVoucher(true)
     }
