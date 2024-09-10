@@ -1,5 +1,6 @@
 import ToastComponent from '@/components/ToastComponent'
-import { TPostMessage } from '@/types'
+import { STATUS_OF_VOUCHER } from '@/constants'
+import { Coupon, TPostMessage } from '@/types'
 import moment from 'moment'
 import { useEffect, useRef, useState } from 'react'
 

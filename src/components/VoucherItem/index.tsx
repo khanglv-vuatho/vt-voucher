@@ -1,29 +1,33 @@
-import { PADDING_OF_TICKET_DETAIL, WITDH_OF_BORDER_DOTS } from '@/constants'
+import { PADDING_OF_TICKET_DETAIL, STATUS_OF_VOUCHER, WITDH_OF_BORDER_DOTS } from '@/constants'
 import { Coupon } from '@/types'
 import { AddCircle, TickCircle } from 'iconsax-react'
 import { memo } from 'react'
 import { ButtonOnlyIcon } from '../Buttons'
 import ImageCustom from '../ImageCustom'
 import TicketAnimation from '../TicketAnimation'
+import { translate } from '@/context/translationProvider'
 
 type VoucherItemProps = Coupon & { selected: number | number[] | null; onSelect: (id: number) => void; isReadOnlyMode: boolean }
 const VoucherItem: React.FC<VoucherItemProps> = ({ id, selected, onSelect, image, isReadOnlyMode, conditions, total_discount, end_date, type }) => {
+  const t = translate('Home')
+
   const isHaveSelected = selected !== null
 
   const isSelected = Array.isArray(selected) ? selected?.includes(id) : selected === id
 
   const renderTypeText = (typeVoucher: Coupon['type']) => {
     switch (typeVoucher) {
-      case 'PERCENT_MAX_AMOUNT':
-        return `Giảm ${total_discount.percent}% tối đa ${total_discount.price?.toLocaleString()}đ`
-      case 'FIXED_AMOUNT':
-        return `Giảm ${total_discount.price?.toLocaleString()}đ`
+      case STATUS_OF_VOUCHER.PERCENT_MAX_AMOUNT:
+        return `${t?.text10} ${total_discount?.percent}% ${t?.text11} ${total_discount?.price?.toLocaleString()}đ`
+      case STATUS_OF_VOUCHER.FIXED_AMOUNT:
+        return `${t?.text10} ${total_discount?.price?.toLocaleString()}đ`
       case 'PERCENT_UNLIMITED':
-        return `Giảm ${total_discount.percent}%`
+        return `${t?.text10} ${total_discount?.percent}%`
       default:
         return ''
     }
   }
+
   return (
     <div onClick={() => onSelect(id)} className={`flex w-full items-center rounded-e-lg shadow-[8px_8px_16px_0px_#00000014] transition ${!isSelected && isHaveSelected ? 'opacity-50' : ''}`}>
       <div className='relative flex aspect-square size-[84px] flex-shrink-0'>
@@ -44,9 +48,9 @@ const VoucherItem: React.FC<VoucherItemProps> = ({ id, selected, onSelect, image
         <div className='flex h-full flex-col justify-between'>
           <div className='flex flex-col'>
             <p className='text-sm font-bold'>{renderTypeText(type)}</p>
-            <p className='line-clamp-2 text-xs'>{`${conditions.first_order ? 'Cho đơn hàng đầu tiên' : `Đơn tối thiểu ${conditions.price_order?.toLocaleString()}đ`} `}</p>
+            <p className='line-clamp-2 text-xs'>{`${conditions?.first_order ? t?.text8 : `${t?.text9} ${conditions?.price_order?.toLocaleString()}đ`} `}</p>
           </div>
-          <p className='text-xs text-primary-gray'>{`Hết hạn sau: ${end_date.split('-').join('.')}`}</p>
+          <p className='text-xs text-primary-gray'>{`${t?.text7}: ${end_date.split('-').join('.')}`}</p>
         </div>
         <div className='relative'>
           {!isReadOnlyMode && (

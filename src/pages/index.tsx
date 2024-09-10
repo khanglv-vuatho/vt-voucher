@@ -7,11 +7,14 @@ import VoucherItem from '@/components/VoucherItem'
 import { keyPossmessage, STATUS_OF_VOUCHER_APPLY } from '@/constants'
 import { translate } from '@/context/translationProvider'
 import { Coupon } from '@/types'
+import { postMessageCustom } from '@/utils'
 import { Button, Input } from '@nextui-org/react'
 import { ArrowLeft2, TicketDiscount } from 'iconsax-react'
 import { useCallback, useEffect, useState } from 'react'
 
 const Home = () => {
+  const t = translate('Home')
+
   const queryParams = new URLSearchParams(location.search)
   const orderId = Number(queryParams.get('orderId'))
   const isReadOnlyMode = queryParams.get('isReadOnlyMode') === 'true'
@@ -23,7 +26,6 @@ const Home = () => {
   const [searchValue, setSearchValue] = useState('')
   const [isSearching, setIsSearching] = useState(false)
   const [isAddingVoucher, setIsAddingVoucher] = useState(false)
-  const t = translate('Home')
 
   // This function has been moved to the APIs file
   const handleFetchVoucher = useCallback(async () => {
@@ -66,8 +68,8 @@ const Home = () => {
   }, [])
 
   const handleCloseWebview = useCallback(() => {
-    postMessage({
-      type: keyPossmessage.CAN_POP
+    postMessageCustom({
+      message: keyPossmessage.CAN_POP
     })
   }, [])
 
