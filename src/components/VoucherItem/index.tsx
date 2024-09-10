@@ -1,11 +1,12 @@
 import { PADDING_OF_TICKET_DETAIL, STATUS_OF_VOUCHER, WITDH_OF_BORDER_DOTS } from '@/constants'
 import { Coupon } from '@/types'
-import { AddCircle, TickCircle } from 'iconsax-react'
+import { AddCircle } from 'iconsax-react'
 import { memo } from 'react'
 import { ButtonOnlyIcon } from '../Buttons'
 import ImageCustom from '../ImageCustom'
 import TicketAnimation from '../TicketAnimation'
 import { translate } from '@/context/translationProvider'
+import { TickIcon } from '@/components/Icons'
 
 type VoucherItemProps = Coupon & { selected: number | number[] | null; onSelect: (id: number) => void; isReadOnlyMode: boolean }
 const VoucherItem: React.FC<VoucherItemProps> = ({ id, selected, onSelect, image, isReadOnlyMode, conditions, total_discount, end_date, type }) => {
@@ -55,7 +56,7 @@ const VoucherItem: React.FC<VoucherItemProps> = ({ id, selected, onSelect, image
         <div className='relative'>
           {!isReadOnlyMode && (
             <ButtonOnlyIcon onClick={() => onSelect(id)} disableAnimation>
-              {isSelected ? <TickCircle size={24} variant='Bold' className='text-primary-green' /> : <AddCircle size={24} className='text-primary-gray' />}
+              {isSelected ? <TickIcon className='size-6' /> : <AddCircle size={24} variant='Bold' className='text-primary-gray/50' />}
             </ButtonOnlyIcon>
           )}
           {isSelected && <TicketAnimation />}

@@ -1,11 +1,13 @@
 import instance from '@/services/axiosConfig'
 
-const getVouchers = async ({ orderId, searchValue }: { orderId: number; searchValue?: string }) => {
+const getVouchers = async ({ orderId, searchValue }: { orderId?: number; searchValue?: string }) => {
   try {
-    const params = searchValue ? { code: searchValue } : undefined
-    const { data } = await instance.get(`/vouchers/available/${orderId}`, {
-      params
-    })
+    const params = {
+      ...(searchValue && { code: searchValue }),
+      ...(orderId && { id: orderId })
+    }
+
+    const { data } = await instance.get('/vouchers/available', { params })
     return data
   } catch (error) {
     console.error('Error fetching vouchers:', error)

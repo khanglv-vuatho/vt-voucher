@@ -17,8 +17,7 @@ const Home = () => {
 
   const queryParams = new URLSearchParams(location.search)
   const orderId = Number(queryParams.get('orderId'))
-  const isReadOnlyMode = queryParams.get('isReadOnlyMode') === 'true'
-
+  const isReadOnlyMode = queryParams.get('orderId') === null
   const [voucherData, setVoucherData] = useState<Coupon[] | null>(null)
   const [selectedVoucherId, setSelectedVoucherId] = useState<number | number[] | null>(null)
   const [preSelectedId, setPreSelectedId] = useState<number | number[] | null>(null)
