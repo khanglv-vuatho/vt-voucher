@@ -5,6 +5,7 @@ import SkeletonVoucherItem from '@/components/SkeletonVoucherItem'
 import ToastComponent from '@/components/ToastComponent'
 import VoucherItem from '@/components/VoucherItem'
 import { keyPossmessage, STATUS_OF_VOUCHER_APPLY } from '@/constants'
+import { translate } from '@/context/translationProvider'
 import { Coupon } from '@/types'
 import { Button, Input } from '@nextui-org/react'
 import { ArrowLeft2, TicketDiscount } from 'iconsax-react'
@@ -22,6 +23,7 @@ const Home = () => {
   const [searchValue, setSearchValue] = useState('')
   const [isSearching, setIsSearching] = useState(false)
   const [isAddingVoucher, setIsAddingVoucher] = useState(false)
+  const t = translate('Home')
 
   // This function has been moved to the APIs file
   const handleFetchVoucher = useCallback(async () => {
@@ -69,13 +71,13 @@ const Home = () => {
     })
   }, [])
 
-  console.log({ selectedVoucherId, preSelectedId })
   const handleToastVoucherAdded = () => {
     ToastComponent({
-      message: 'Voucher đã được sử dụng',
+      message: t?.text5,
       type: 'info'
     })
   }
+
   // search voucher
   const handleSearch = () => {
     if (searchValue === '') return
@@ -143,7 +145,7 @@ const Home = () => {
     }
   }
 
-  // fetch voucher
+  // fetch voucher4
   useEffect(() => {
     setIsFetching(true)
   }, [])
@@ -166,7 +168,7 @@ const Home = () => {
         <ButtonOnlyIcon onClick={handleCloseWebview}>
           <ArrowLeft2 size={24} />
         </ButtonOnlyIcon>
-        <p className='font-bold'>Voucher giảm giá</p>
+        <p className='font-bold'>{t?.text1}</p>
         <span className='opacity-0'>
           <ArrowLeft2 />
         </span>
@@ -176,19 +178,19 @@ const Home = () => {
           {!isReadOnlyMode && (
             <div className='w-full'>
               <Input
-                placeholder='Nhập mã code'
+                placeholder={t?.text6}
                 value={searchValue}
                 onChange={handleChangeSearchValue}
                 startContent={<TicketDiscount className='flex flex-shrink-0 text-[#a6a6a6]' size={24} />}
                 endContent={
                   <Button isLoading={isSearching} className='h-[34px] min-w-[96px] rounded-lg bg-primary-black px-2 py-4 text-sm font-bold text-white' onPress={handleSearch}>
-                    Tìm
+                    {t?.text2}
                   </Button>
                 }
                 classNames={{
                   base: 'bg-[#F8F8F8]',
                   inputWrapper:
-                    'bg-[#F8F8F8] shadow-none group-data-[focus-visible=true]:ring-none group-data-[focus-visible=true]:ring-offset-0 group-data-[focus-visible=true]:ring-offset-background data-[hover=true]:bg-transparent group-data-[focus=true]:bg-transparent',
+                    'bg-[#F8F8F8] shadow-none group-data-[focus-visible=true]:ring-none group-data-[focus-visible=true]:ring-offset-0 group-data-[focus-visi9ble=true]:ring-offset-background data-[hover=true]:bg-transparent group-data-[focus=true]:bg-transparent',
                   mainWrapper: 'min-h-14 items-center justify-center'
                 }}
               />
@@ -197,16 +199,16 @@ const Home = () => {
           {isFetching ? (
             Array.from({ length: 6 }).map((_, index) => <SkeletonVoucherItem key={index} />)
           ) : !!voucherData?.length ? (
-            voucherData?.map((item) => <VoucherItem {...item} key={item.id} isReadOnlyMode={isReadOnlyMode} selected={selectedVoucherId} onSelect={() => handleSelectVoucher(item.id)} />)
+            voucherData?.map((item) => <VoucherItem {...item} key={item?.id} isReadOnlyMode={isReadOnlyMode} selected={selectedVoucherId} onSelect={() => handleSelectVoucher(item?.id)} />)
           ) : (
             <div className='flex flex-col items-center justify-center gap-2'>
               <ImageFallback src={'./no-voucher.png'} alt='no-voucher' width={200} height={200} />
-              <p className='text-sm text-primary-gray'>Hiện tại bạn chưa có voucher nào.</p>
+              <p className='text-sm text-primary-gray'>{t?.text3}.</p>
             </div>
           )}
         </div>
         <Button isLoading={isAddingVoucher} onPress={handleToggleApplyVoucher} className='mx-auto mb-2 w-[90%] rounded-full bg-primary-yellow font-bold text-primary-black'>
-          Xác nhận
+          {t?.text4}
         </Button>
       </div>
     </div>

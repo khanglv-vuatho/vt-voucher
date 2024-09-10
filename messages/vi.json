@@ -1,1 +1,10 @@
-{}
+{
+  "Home": {
+    "text1": "Voucher giảm giá",
+    "text2": "Tìm",
+    "text3": "Hiện tại bạn chưa có voucher nào",
+    "text4": "Xác nhận",
+    "text5": "Voucher đã được sử dụng",
+    "text6": "Nhập mã code"
+  }
+}

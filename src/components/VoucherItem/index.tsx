@@ -1,12 +1,10 @@
-import { TickCircle, AddCircle } from 'iconsax-react'
+import { PADDING_OF_TICKET_DETAIL, WITDH_OF_BORDER_DOTS } from '@/constants'
+import { Coupon } from '@/types'
+import { AddCircle, TickCircle } from 'iconsax-react'
 import { memo } from 'react'
 import { ButtonOnlyIcon } from '../Buttons'
-import ImageFallback from '../ImageFallback'
-import { PADDING_OF_TICKET_DETAIL, WITDH_OF_BORDER_DOTS } from '@/constants'
-import TicketAnimation from '../TicketAnimation'
 import ImageCustom from '../ImageCustom'
-import { Coupon } from '@/types'
-import { formatDDMMYYYY } from '@/utils'
+import TicketAnimation from '../TicketAnimation'
 
 type VoucherItemProps = Coupon & { selected: number | number[] | null; onSelect: (id: number) => void; isReadOnlyMode: boolean }
 const VoucherItem: React.FC<VoucherItemProps> = ({ id, selected, onSelect, image, isReadOnlyMode, conditions, total_discount, end_date, type }) => {
