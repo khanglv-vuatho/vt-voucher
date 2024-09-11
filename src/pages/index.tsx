@@ -68,7 +68,7 @@ const Home = () => {
 
   const handleCloseWebview = useCallback(() => {
     postMessageCustom({
-      message: keyPossmessage.CAN_POP
+      message: keyPossmessage.VOUCHER_ADDED
     })
   }, [])
 
@@ -138,9 +138,7 @@ const Home = () => {
     if (selectedVoucherId === isItemSelected?.id) return handleToastVoucherAdded()
 
     if (!!isItemSelected && preSelectedId === null) {
-      postMessageCustom({
-        message: keyPossmessage.VOUCHER_ADDED
-      })
+      handleCloseWebview()
     } else {
       setIsAddingVoucher(true)
     }
