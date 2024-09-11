@@ -6,7 +6,7 @@ import { ButtonOnlyIcon } from '../Buttons'
 import ImageCustom from '../ImageCustom'
 import TicketAnimation from '../TicketAnimation'
 import { translate } from '@/context/translationProvider'
-import { TickIcon } from '@/components/Icons'
+import RenderTickLottieFile from '@/lottiefiles'
 
 type VoucherItemProps = Coupon & { selected: number | number[] | null; onSelect: (id: number) => void; isReadOnlyMode: boolean }
 const VoucherItem: React.FC<VoucherItemProps> = ({ id, selected, onSelect, image, isReadOnlyMode, conditions, total_discount, end_date, type }) => {
@@ -56,7 +56,7 @@ const VoucherItem: React.FC<VoucherItemProps> = ({ id, selected, onSelect, image
         <div className='relative'>
           {!isReadOnlyMode && (
             <ButtonOnlyIcon onClick={() => onSelect(id)} disableAnimation>
-              {isSelected ? <TickIcon className='size-6' /> : <AddCircle size={24} variant='Bold' className='text-primary-gray/50' />}
+              {isSelected ? <RenderTickLottieFile className='size-8' /> : <AddCircle size={24} variant='Bold' className='text-primary-gray/50' />}
             </ButtonOnlyIcon>
           )}
           {isSelected && <TicketAnimation />}
