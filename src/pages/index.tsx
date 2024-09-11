@@ -138,8 +138,8 @@ const Home = () => {
     if (selectedVoucherId === isItemSelected?.id) return handleToastVoucherAdded()
 
     if (!!isItemSelected && preSelectedId === null) {
-      postMessage({
-        type: keyPossmessage.VOUCHER_ADDED
+      postMessageCustom({
+        message: keyPossmessage.VOUCHER_ADDED
       })
     } else {
       setIsAddingVoucher(true)
