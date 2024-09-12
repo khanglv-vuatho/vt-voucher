@@ -72,6 +72,12 @@ const Home = () => {
     })
   }, [])
 
+  const handleCanPop = () => {
+    postMessageCustom({
+      message: keyPossmessage.CAN_POP
+    })
+  }
+
   const handleToastVoucherAdded = () => {
     ToastComponent({
       message: t?.text5,
@@ -164,7 +170,7 @@ const Home = () => {
   return (
     <div className='flex h-dvh w-full flex-col'>
       <header className='flex items-center justify-between p-4'>
-        <ButtonOnlyIcon onClick={handleCloseWebview}>
+        <ButtonOnlyIcon onClick={handleCanPop}>
           <ArrowLeft2 size={24} />
         </ButtonOnlyIcon>
         <p className='font-bold'>{t?.text1}</p>
