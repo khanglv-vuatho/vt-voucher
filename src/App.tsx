@@ -1,22 +1,35 @@
 import { Route, Routes } from 'react-router-dom'
 
-import Home from '@/pages/index'
-import InvalidPage from '@/pages/invalid'
-import Test from './pages/test'
+import { lazy, Suspense } from 'react'
+import { CircularProgress } from '@nextui-org/react'
+
+const Home = lazy(() => import('./pages/index'))
+const InvalidPage = lazy(() => import('./pages/invalid'))
 
 const routes = [
   { path: '/', element: <Home /> },
-  { path: '/invalid', element: <InvalidPage /> },
-  { path: '/test', element: <Test /> }
+  { path: '/invalid', element: <InvalidPage /> }
 ]
 
 function App() {
   return (
-    <Routes>
-      {routes.map(({ path, element }, index) => (
-        <Route key={index} path={path} element={element} />
-      ))}
-    </Routes>
+    <Suspense
+      fallback={
+        <div className='flex h-dvh w-full items-center justify-center'>
+          <CircularProgress
+            classNames={{
+              svg: 'h-8 w-8 text-primary-blue'
+            }}
+          />
+        </div>
+      }
+    >
+      <Routes>
+        {routes.map(({ path, element }, index) => (
+          <Route key={index} path={path} element={element} />
+        ))}
+      </Routes>
+    </Suspense>
   )
 }
 
