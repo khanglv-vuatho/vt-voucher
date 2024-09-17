@@ -34,7 +34,7 @@ const VoucherItem: React.FC<VoucherItemProps> = ({ id, selected, onSelect, image
   const renderIndustryText = (industries: Coupon['conditions']['industries']) => {
     if (!industries?.length) return ''
     const industryNames = industries.map((industry) => industry.name)
-    return industries.length === 1 ? `Voucher áp dụng cho ngành ${industryNames[0]}` : `Voucher áp dụng cho các ngành ${industryNames.join(', ')}`
+    return `Voucher áp dụng cho ${industries.length === 1 ? 'ngành' : 'các ngành'} ${industryNames.join(', ')}`
   }
 
   return (
@@ -57,7 +57,9 @@ const VoucherItem: React.FC<VoucherItemProps> = ({ id, selected, onSelect, image
         <div className='flex h-full flex-col justify-between'>
           <div className='flex flex-col'>
             <p className='text-sm font-bold'>{renderTypeText(type)}</p>
-            <p className='line-clamp-2 text-xs'>{`${conditions?.industries ? renderIndustryText(conditions?.industries) : ''} ${conditions?.first_order ? t?.text8 : `${t?.text9} ${conditions?.price_order?.toLocaleString()}đ`} `}</p>
+            <p className='line-clamp-2 text-xs'>
+              {conditions?.industries ? renderIndustryText(conditions?.industries) : conditions?.first_order ? t?.text8 : `${t?.text9} ${conditions?.price_order?.toLocaleString()}đ`}
+            </p>
           </div>
           <p className='text-xs text-primary-gray'>{`${t?.text7}: ${end_date.split('-').join('.')}`}</p>
         </div>

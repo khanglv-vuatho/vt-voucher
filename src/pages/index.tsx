@@ -203,7 +203,7 @@ const Home = () => {
               </div>
             )}
             {isFetching ? (
-              Array.from({ length: 3 }).map((_, index) => <SkeletonVoucherItem key={index} />)
+              Array.from({ length: 7 }).map((_, index) => <SkeletonVoucherItem key={index} />)
             ) : !!voucherData?.length ? (
               voucherData?.map((item) => <VoucherItem {...item} key={item?.id} isReadOnlyMode={isReadOnlyMode} selected={selectedVoucherId} onSelect={() => handleSelectVoucher(item?.id)} />)
             ) : (
