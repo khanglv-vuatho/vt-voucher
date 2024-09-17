@@ -23,7 +23,10 @@ export type Coupon = {
   conditions: {
     price_order?: number
     first_order?: boolean
-    industry_id?: number[]
+    industries?: {
+      id: number
+      name: string
+    }[]
   }
   total_discount: {
     price?: number
