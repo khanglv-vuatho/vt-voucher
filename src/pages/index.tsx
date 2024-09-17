@@ -89,7 +89,7 @@ const Home = () => {
   // search voucher
   const handleSearch = () => {
     if (searchValue === '') return
-    const isItemSelected = voucherData?.find((item: Coupon) => item.is_selected == true)
+    const isItemSelected = voucherData?.find((item: Coupon) => item?.is_selected == true)
 
     if (searchValue === isItemSelected?.code) {
       setSelectedVoucherId(isItemSelected?.id)
@@ -119,7 +119,6 @@ const Home = () => {
       setSearchValue('')
     }
   }
-
   const handleChangeSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value)
   }
@@ -170,56 +169,58 @@ const Home = () => {
 
   return (
     <div className='flex h-dvh w-full flex-col'>
-      <header className='flex items-center justify-between p-4'>
-        <ButtonOnlyIcon onClick={handleCanPop}>
-          <ArrowLeft2 size={24} />
-        </ButtonOnlyIcon>
-        <p className='font-bold'>{t?.text1}</p>
-        <span className='opacity-0'>
-          <ArrowLeft2 />
-        </span>
-      </header>
-      <div className='flex h-full flex-col justify-between'>
-        <div className='flex h-full w-full flex-col items-center gap-4 p-4'>
-          {!isReadOnlyMode && (
-            <div className='w-full'>
-              <Input
-                placeholder={t?.text6}
-                value={searchValue}
-                onChange={handleChangeSearchValue}
-                startContent={<TicketDiscount className='flex flex-shrink-0 text-[#a6a6a6]' size={24} />}
-                endContent={
-                  <Button isLoading={isSearching} className='h-[34px] min-w-[96px] rounded-lg bg-primary-black px-2 py-4 text-sm font-bold text-white' onPress={handleSearch}>
-                    {t?.text2}
-                  </Button>
-                }
-                classNames={{
-                  base: 'bg-[#F8F8F8]',
-                  inputWrapper:
-                    'bg-[#F8F8F8] shadow-none group-data-[focus-visible=true]:ring-none group-data-[focus-visible=true]:ring-offset-0 group-data-[focus-visi9ble=true]:ring-offset-background data-[hover=true]:bg-transparent group-data-[focus=true]:bg-transparent',
-                  mainWrapper: 'min-h-14 items-center justify-center'
-                }}
-              />
-            </div>
-          )}
-          {isFetching ? (
-            Array.from({ length: 3 }).map((_, index) => <SkeletonVoucherItem key={index} />)
-          ) : !!voucherData?.length ? (
-            voucherData?.map((item) => <VoucherItem {...item} key={item?.id} isReadOnlyMode={isReadOnlyMode} selected={selectedVoucherId} onSelect={() => handleSelectVoucher(item?.id)} />)
-          ) : (
-            <div className='flex h-full flex-1 flex-col items-center justify-center'>
-              <div className='flex h-full flex-col items-center justify-center gap-2'>
-                <ImageFallback src={'./no-voucher.png'} alt='no-voucher' width={200} height={200} />
-                <p className='text-sm text-primary-gray'>{t?.text3}.</p>
+      <div className='flex h-full w-full flex-col'>
+        <header className='flex items-center justify-between p-4'>
+          <ButtonOnlyIcon onClick={handleCanPop}>
+            <ArrowLeft2 size={24} />
+          </ButtonOnlyIcon>
+          <p className='font-bold'>{t?.text1}</p>
+          <span className='opacity-0'>
+            <ArrowLeft2 />
+          </span>
+        </header>
+        <div className='relative flex h-full flex-col justify-between'>
+          <div className='flex h-full max-h-[calc(100dvh-152px)] w-full flex-col items-center gap-4 overflow-y-auto p-4'>
+            {!isReadOnlyMode && (
+              <div className='w-full'>
+                <Input
+                  placeholder={t?.text6}
+                  value={searchValue}
+                  onChange={handleChangeSearchValue}
+                  startContent={<TicketDiscount className='flex flex-shrink-0 text-[#a6a6a6]' size={24} />}
+                  endContent={
+                    <Button isLoading={isSearching} className='h-[34px] min-w-[96px] rounded-lg bg-primary-black px-2 py-4 text-sm font-bold text-white' onPress={handleSearch}>
+                      {t?.text2}
+                    </Button>
+                  }
+                  classNames={{
+                    base: 'bg-[#F8F8F8]',
+                    inputWrapper:
+                      'bg-[#F8F8F8] shadow-none group-data-[focus-visible=true]:ring-none group-data-[focus-visible=true]:ring-offset-0 group-data-[focus-visi9ble=true]:ring-offset-background data-[hover=true]:bg-transparent group-data-[focus=true]:bg-transparent',
+                    mainWrapper: 'min-h-14 items-center justify-center'
+                  }}
+                />
               </div>
-            </div>
-          )}
+            )}
+            {isFetching ? (
+              Array.from({ length: 3 }).map((_, index) => <SkeletonVoucherItem key={index} />)
+            ) : !!voucherData?.length ? (
+              voucherData?.map((item) => <VoucherItem {...item} key={item?.id} isReadOnlyMode={isReadOnlyMode} selected={selectedVoucherId} onSelect={() => handleSelectVoucher(item?.id)} />)
+            ) : (
+              <div className='flex h-full flex-1 flex-col items-center justify-center'>
+                <div className='flex h-full flex-col items-center justify-center gap-2'>
+                  <ImageFallback src={'./no-voucher.png'} alt='no-voucher' width={200} height={200} />
+                  <p className='text-sm text-primary-gray'>{t?.text3}.</p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-        <div className='sticky bottom-0 left-0 right-0 flex items-center justify-center'>
-          <Button isLoading={isAddingVoucher} onPress={handleToggleApplyVoucher} className='mx-auto mb-2 w-[90%] rounded-full bg-primary-yellow font-bold text-primary-black'>
-            {t?.text4}
-          </Button>
-        </div>
+      </div>
+      <div className='sticky bottom-0 left-0 right-0 z-50 flex items-center justify-center bg-white py-4'>
+        <Button isLoading={isAddingVoucher} onPress={handleToggleApplyVoucher} className='mx-auto mb-2 w-[90%] rounded-full bg-primary-yellow font-bold text-primary-black'>
+          {t?.text4}
+        </Button>
       </div>
     </div>
   )
