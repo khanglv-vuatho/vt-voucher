@@ -130,22 +130,23 @@ const Home = () => {
 
       setSelectedVoucherId(null)
       setPreSelectedId(null)
+      handleCloseWebview()
     } catch (error) {
       console.log(error)
     } finally {
       setIsAddingVoucher(false)
-      handleCloseWebview()
     }
   }
 
   const handleToggleApplyVoucher = () => {
     const isItemSelected = voucherData?.find((item: Coupon) => item.is_selected == true)
-
+    console.log('123123')
     if (selectedVoucherId === isItemSelected?.id) return handleToastVoucherAdded()
 
     if (!!isItemSelected && preSelectedId === null) {
       handleCloseWebview()
     } else {
+      // to call api toggle apply voucher (handleToggleApplyVoucherApi)
       setIsAddingVoucher(true)
     }
   }
