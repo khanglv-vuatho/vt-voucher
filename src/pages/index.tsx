@@ -139,8 +139,11 @@ const Home = () => {
   }
 
   const handleToggleApplyVoucher = () => {
+    ToastComponent({
+      message: 'khang dep trai',
+      type: 'info'
+    })
     const isItemSelected = voucherData?.find((item: Coupon) => item.is_selected == true)
-    console.log('123123')
     if (selectedVoucherId === isItemSelected?.id) return handleToastVoucherAdded()
 
     if (!!isItemSelected && preSelectedId === null) {
