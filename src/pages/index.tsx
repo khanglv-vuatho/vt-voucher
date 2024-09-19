@@ -127,15 +127,16 @@ const Home = () => {
     try {
       // create preSelectedId to store id of voucher
       const data = await handleAddVoucher({ orderId, id: preSelectedId || 0, status: selectedVoucherId === null ? STATUS_OF_VOUCHER_APPLY.REMOVE : STATUS_OF_VOUCHER_APPLY.APPLY })
-      ToastComponent({
-        message: JSON.stringify(data),
-        type: 'success'
-      })
+
       setSelectedVoucherId(null)
       setPreSelectedId(null)
       handleCloseWebview()
     } catch (error) {
       console.log(error)
+      ToastComponent({
+        message: JSON.stringify(error),
+        type: 'error'
+      })
     } finally {
       setIsAddingVoucher(false)
     }
