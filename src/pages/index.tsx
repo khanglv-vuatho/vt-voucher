@@ -94,8 +94,8 @@ const Home = () => {
     if (searchValue === isItemSelected?.code) {
       setSelectedVoucherId(isItemSelected?.id)
       setPreSelectedId(null)
+      setSearchValue('')
       handleToastVoucherAdded()
-      return
     }
     setIsSearching(true)
   }
@@ -143,14 +143,19 @@ const Home = () => {
 
   const handleToggleApplyVoucher = () => {
     const isItemSelected = voucherData?.find((item: Coupon) => item.is_selected == true)
-    if (selectedVoucherId === isItemSelected?.id) return handleCanPop()
-
-    if (!!isItemSelected && preSelectedId === null) {
-      handleCloseWebview()
-    } else {
-      // to call api toggle apply voucher (handleToggleApplyVoucherApi)
-      setIsAddingVoucher(true)
+    if (selectedVoucherId === null && preSelectedId === null && isItemSelected === undefined) return handleCanPop()
+    if (selectedVoucherId === isItemSelected?.id) {
+      handleCanPop()
     }
+
+    // if (!!isItemSelected && preSelectedId === null) {
+    //   handleCloseWebview()
+    //   console.log('456')
+    // } else {
+    //   // to call api toggle apply voucher (handleToggleApplyVoucherApi)
+    //   setIsAddingVoucher(true)
+    // }
+    setIsAddingVoucher(true)
   }
 
   // fetch voucher4
