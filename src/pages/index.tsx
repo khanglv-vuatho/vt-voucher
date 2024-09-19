@@ -94,8 +94,8 @@ const Home = () => {
     if (searchValue === isItemSelected?.code) {
       setSelectedVoucherId(isItemSelected?.id)
       setPreSelectedId(null)
-      console.log('123')
-      return handleToastVoucherAdded()
+      handleToastVoucherAdded()
+      return
     }
     setIsSearching(true)
   }
@@ -126,8 +126,11 @@ const Home = () => {
   const handleToggleApplyVoucherApi = async () => {
     try {
       // create preSelectedId to store id of voucher
-      await handleAddVoucher({ orderId, id: preSelectedId || 0, status: selectedVoucherId === null ? STATUS_OF_VOUCHER_APPLY.REMOVE : STATUS_OF_VOUCHER_APPLY.APPLY })
-
+      const data = await handleAddVoucher({ orderId, id: preSelectedId || 0, status: selectedVoucherId === null ? STATUS_OF_VOUCHER_APPLY.REMOVE : STATUS_OF_VOUCHER_APPLY.APPLY })
+      ToastComponent({
+        message: JSON.stringify(data),
+        type: 'success'
+      })
       setSelectedVoucherId(null)
       setPreSelectedId(null)
       handleCloseWebview()
@@ -139,12 +142,8 @@ const Home = () => {
   }
 
   const handleToggleApplyVoucher = () => {
-    ToastComponent({
-      message: 'khang dep trai',
-      type: 'info'
-    })
     const isItemSelected = voucherData?.find((item: Coupon) => item.is_selected == true)
-    if (selectedVoucherId === isItemSelected?.id) return handleToastVoucherAdded()
+    if (selectedVoucherId === isItemSelected?.id) return handleCanPop()
 
     if (!!isItemSelected && preSelectedId === null) {
       handleCloseWebview()
