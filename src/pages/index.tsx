@@ -131,10 +131,9 @@ const Home = () => {
       setSelectedVoucherId(null)
       setPreSelectedId(null)
       handleCloseWebview()
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
       ToastComponent({
-        message: JSON.stringify(error),
+        message: error.response.data.message.replace('"', ''),
         type: 'error'
       })
     } finally {
