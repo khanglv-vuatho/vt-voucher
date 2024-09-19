@@ -126,12 +126,13 @@ const Home = () => {
   const handleToggleApplyVoucherApi = async () => {
     try {
       // create preSelectedId to store id of voucher
-      const data = await handleAddVoucher({ orderId, id: preSelectedId || 0, status: selectedVoucherId === null ? STATUS_OF_VOUCHER_APPLY.REMOVE : STATUS_OF_VOUCHER_APPLY.APPLY })
+      await handleAddVoucher({ orderId, id: preSelectedId || 0, status: selectedVoucherId === null ? STATUS_OF_VOUCHER_APPLY.REMOVE : STATUS_OF_VOUCHER_APPLY.APPLY })
 
       setSelectedVoucherId(null)
       setPreSelectedId(null)
       handleCloseWebview()
     } catch (error: any) {
+      if (selectedVoucherId === null) return handleCanPop()
       ToastComponent({
         message: error.response.data.message.replace('"', ''),
         type: 'error'
