@@ -27,6 +27,9 @@ const Home = () => {
   const [isSearching, setIsSearching] = useState(false)
   const [isAddingVoucher, setIsAddingVoucher] = useState(false)
 
+  // call from api to get voucher selected to check handle submit if voucherSelected
+  const [voucherSelectedIdFormApi, setVoucherSelectedIdFormApi] = useState<number | null>(null)
+
   // This function has been moved to the APIs file
   const handleFetchVoucher = useCallback(async () => {
     try {
@@ -37,6 +40,7 @@ const Home = () => {
       if (isItemSelected) {
         setSelectedVoucherId(isItemSelected.id)
         // Move the selected item to the beginning of the array
+        setVoucherSelectedIdFormApi(isItemSelected.id)
         const reorderedData = [isItemSelected, ...data.filter((item: Coupon) => item.id !== isItemSelected.id)]
         setVoucherData(reorderedData)
       } else {
@@ -142,12 +146,19 @@ const Home = () => {
     }
   }
 
+  console.log({ voucherSelectedIdFormApi, selectedVoucherId, preSelectedId })
+
   const handleToggleApplyVoucher = () => {
     const isItemSelected = voucherData?.find((item: Coupon) => item.is_selected == true)
+
+    // chưa có thao tác nào nên => canpop
+    if (preSelectedId === null) return handleCanPop()
+    // không có dữ liệu => canPop
     if (selectedVoucherId === null && preSelectedId === null && isItemSelected === undefined) return handleCanPop()
-    if (selectedVoucherId === isItemSelected?.id) {
-      handleCanPop()
-    }
+    //Chọn lại voucher cũ => canPop
+    if (selectedVoucherId === isItemSelected?.id) return handleCanPop()
+    // voucher đã được chọn trùng với voucher được lấy từ api => canPop
+    if (voucherSelectedIdFormApi === isItemSelected?.id) return handleCanPop()
 
     // if (!!isItemSelected && preSelectedId === null) {
     //   handleCloseWebview()
