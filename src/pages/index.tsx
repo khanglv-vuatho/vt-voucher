@@ -152,13 +152,29 @@ const Home = () => {
     const isItemSelected = voucherData?.find((item: Coupon) => item.is_selected == true)
 
     // chưa có thao tác nào nên => canpop
-    if (preSelectedId === null) return handleCanPop()
+    if (preSelectedId === null) {
+      handleCanPop()
+      console.log('preSelectedId === null')
+      return
+    }
     // không có dữ liệu => canPop
-    if (selectedVoucherId === null && preSelectedId === null && isItemSelected === undefined) return handleCanPop()
+    if (selectedVoucherId === null && preSelectedId === null && isItemSelected === undefined) {
+      handleCanPop()
+      console.log('selectedVoucherId === null && preSelectedId === null && isItemSelected === undefined')
+      return
+    }
     //Chọn lại voucher cũ => canPop
-    if (selectedVoucherId === isItemSelected?.id) return handleCanPop()
+    if (selectedVoucherId === isItemSelected?.id) {
+      handleCanPop()
+      console.log('selectedVoucherId === isItemSelected?.id')
+      return
+    }
     // voucher đã được chọn trùng với voucher được lấy từ api => canPop
-    if (voucherSelectedIdFormApi === isItemSelected?.id) return handleCanPop()
+    if (voucherSelectedIdFormApi === selectedVoucherId) {
+      handleCanPop()
+      console.log('voucherSelectedIdFormApi === isItemSelected?.id')
+      return
+    }
 
     // if (!!isItemSelected && preSelectedId === null) {
     //   handleCloseWebview()
