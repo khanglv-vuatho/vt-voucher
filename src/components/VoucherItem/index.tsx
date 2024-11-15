@@ -40,6 +40,7 @@ const VoucherItem: React.FC<VoucherItemProps> = ({ id, selected, onSelect, image
   return (
     <div
       onClick={can_apply ? () => onSelect(id) : () => {}}
+      style={isReadOnlyMode ? { opacity: 1 } : {}}
       className={`flex w-full items-center rounded-e-lg shadow-[8px_8px_16px_0px_#00000014] transition ${(!isSelected && isHaveSelected && !can_apply) || !can_apply ? 'opacity-50' : ''}`}
     >
       <div className='relative flex aspect-square size-[84px] flex-shrink-0'>
