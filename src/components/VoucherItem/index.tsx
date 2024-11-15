@@ -40,7 +40,7 @@ const VoucherItem: React.FC<VoucherItemProps> = ({ id, selected, onSelect, image
   return (
     <div
       onClick={can_apply ? () => onSelect(id) : () => {}}
-      className={`flex w-full items-center rounded-e-lg shadow-[8px_8px_16px_0px_#00000014] transition ${!isSelected && isHaveSelected && !can_apply ? 'opacity-50' : ''}`}
+      className={`flex w-full items-center rounded-e-lg shadow-[8px_8px_16px_0px_#00000014] transition ${(!isSelected && isHaveSelected && !can_apply) || !can_apply ? 'opacity-50' : ''}`}
     >
       <div className='relative flex aspect-square size-[84px] flex-shrink-0'>
         {/* Voucher border  */}
@@ -64,7 +64,7 @@ const VoucherItem: React.FC<VoucherItemProps> = ({ id, selected, onSelect, image
               {conditions?.industries ? renderIndustryText(conditions?.industries) : conditions?.first_order ? t?.text8 : `${t?.text9} ${conditions?.price_order?.toLocaleString()}đ`}
             </p>
           </div>
-          <p className='text-xs text-primary-gray'>{`${t?.text7}: ${end_date.split('-').join('.')}`}</p>
+          <p className='text-xs text-primary-gray'>{`${t?.text7}: ${end_date?.split('-')?.join('.')}`}</p>
         </div>
         <div className='relative'>
           {!isReadOnlyMode && (

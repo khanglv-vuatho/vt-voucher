@@ -35,7 +35,7 @@ export const TranslationProvider = ({ children, lang }: { children: React.ReactN
 
   // Function to get messages
   const getMessages = (key: string) => {
-    const keys = key.split('.')
+    const keys = key?.split('.')
     let result = trans
     for (const k of keys) {
       result = result[k]

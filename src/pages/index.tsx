@@ -246,12 +246,13 @@ const Home = () => {
   const handleCallApiSearchVoucher = async () => {
     try {
       const data: Coupon = await getVouchers({ orderId, searchValue })
+      if ((data as any).length === 0 || data?.can_apply === false) return ToastComponent({ message: 'Voucher không tồn tại', type: 'error' })
       setVoucherData((prev) => {
         const existingVoucher = prev?.find((voucher) => voucher?.id === data?.id)
         if (!existingVoucher) {
           return [data, ...(prev || [])]
         }
-        return prev
+        return [existingVoucher, ...(prev || [])]
       })
       setSelectedVoucherId(data?.id)
       setPreSelectedId(data?.id)

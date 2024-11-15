@@ -31,9 +31,9 @@ const useUnfocusItem = (callback: () => void, exclusionRef?: React.RefObject<HTM
 function capitalizeWords(string: string) {
   if (!string) return ''
   return string
-    .split(' ')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ')
+    ?.split(' ')
+    ?.map((word: string) => word?.charAt(0)?.toUpperCase() + word?.slice(1))
+    ?.join(' ')
 }
 const useDebounce = (value: string, delay: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value)
