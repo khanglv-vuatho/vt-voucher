@@ -41,10 +41,149 @@ const Home = () => {
         setSelectedVoucherId(isItemSelected.id)
         // Move the selected item to the beginning of the array
         setVoucherSelectedIdFormApi(isItemSelected.id)
-        const reorderedData = [isItemSelected, ...data.filter((item: Coupon) => item.id !== isItemSelected.id)]
+        // Filter items that can be applied
+        const applicableItems = data.filter((item: Coupon) => item.can_apply)
+        const nonApplicableItems = data.filter((item: Coupon) => !item.can_apply)
+
+        // Put selected item first, then applicable items, then non-applicable items
+        const reorderedData = [isItemSelected, ...applicableItems.filter((item: Coupon) => item.id !== isItemSelected.id), ...nonApplicableItems]
+
+        // const reorderedData = [isItemSelected, ...data.filter((item: Coupon) => item.id !== isItemSelected.id)]
+        console.log({ reorderedData })
         setVoucherData(reorderedData)
       } else {
-        setVoucherData(data)
+        const data1 = [
+          {
+            id: 184,
+            type: 'PERCENT_UNLIMITED',
+            conditions: {
+              price_order: 1000
+            },
+            total_discount: {
+              percent: 10
+            },
+            quantity: 5,
+            code: 'a134752c',
+            image: 'https://cdn-sandbox.vuatho.com/image/99bbdd69-6d0a-4d6a-89e8-61cb8eec88f4_1731642473048.jpg',
+            end_date: '15-11-2024',
+            can_apply: true,
+            status: 1,
+            is_selected: false
+          },
+          {
+            id: 185,
+            type: 'FIXED_AMOUNT',
+            conditions: {
+              first_order: true
+            },
+            total_discount: {
+              price: 10000
+            },
+            quantity: 10,
+            code: 'da43ea2b',
+            image: 'https://cdn-sandbox.vuatho.com/image/c6fa8fd0-817a-4772-be41-db5e53e7ac2d_1731642481708.jpg',
+            end_date: '16-11-2024',
+            can_apply: false,
+            status: 1,
+            is_selected: false
+          },
+          {
+            id: 186,
+            type: 'PERCENT_UNLIMITED',
+            conditions: {
+              first_order: true
+            },
+            total_discount: {
+              percent: 50
+            },
+            quantity: 2,
+            code: 'b6a64674',
+            image: 'https://cdn-sandbox.vuatho.com/image/d5ec0ebb-ac87-472a-bfab-a0e2668fe5c4_1731642556483.jpg',
+            end_date: '16-11-2024',
+            can_apply: false,
+            status: 1,
+            is_selected: false
+          },
+          {
+            id: 188,
+            type: 'PERCENT_MAX_AMOUNT',
+            conditions: {
+              price_order: 100000
+            },
+            total_discount: {
+              price: 10000,
+              percent: 50
+            },
+            quantity: 11,
+            code: 'f4d0ff5e',
+            image: 'https://cdn-sandbox.vuatho.com/image/27aa1c4a-a571-4f2e-9bf9-f5869a75f273_1731642618414.jpg',
+            end_date: '16-11-2024',
+            can_apply: true,
+            status: 1,
+            is_selected: false
+          },
+          {
+            id: 182,
+            type: 'FIXED_AMOUNT',
+            conditions: {
+              industries: [
+                {
+                  id: 21,
+                  name: 'Điện lạnh'
+                }
+              ]
+            },
+            total_discount: {
+              price: 10000
+            },
+            quantity: 1,
+            code: 'a15c5660',
+            image: 'https://cdn-sandbox.vuatho.com/image/b1fd3881-5323-4ce7-9261-dd4c919e3655_1731640833326.jpg',
+            end_date: '16-11-2024',
+            can_apply: true,
+            status: 1,
+            is_selected: false
+          },
+          {
+            id: 181,
+            type: 'FIXED_AMOUNT',
+            conditions: {
+              price_order: 200000
+            },
+            total_discount: {
+              price: 50000
+            },
+            quantity: 1,
+            code: 'b50ecb17',
+            image: 'https://cdn-sandbox.vuatho.com/image/a76c5def-bec0-4541-b532-0007e74d9a2d_1731639155949.jpg',
+            end_date: '16-11-2024',
+            can_apply: false,
+            status: 1,
+            is_selected: false
+          },
+          {
+            id: 180,
+            type: 'FIXED_AMOUNT',
+            conditions: {
+              price_order: 50000
+            },
+            total_discount: {
+              price: 10000
+            },
+            quantity: 1,
+            code: '9c3c9607',
+            image: 'https://cdn-sandbox.vuatho.com/image/2aec9e21-f87a-44ae-b389-1d28a3dc2b33_1731639026382.jpg',
+            end_date: '16-11-2024',
+            can_apply: true,
+            status: 1,
+            is_selected: false
+          }
+        ]
+
+        // Filter can_apply first, then sort by non-can_apply
+        const sortedData = [...data?.filter((item: Coupon) => item?.can_apply), ...data?.filter((item: Coupon) => !item?.can_apply)]
+
+        setVoucherData(sortedData)
       }
     } catch (error) {
       console.log(error)

@@ -20,6 +20,7 @@ type CouponType = 'FIXED_AMOUNT' | 'PERCENT_MAX_AMOUNT' | 'PERCENT_UNLIMITED'
 export type Coupon = {
   id: number
   type: CouponType
+  can_apply: boolean
   conditions: {
     price_order?: number
     first_order?: boolean

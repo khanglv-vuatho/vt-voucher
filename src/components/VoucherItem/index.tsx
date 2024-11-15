@@ -8,8 +8,8 @@ import TicketAnimation from '../TicketAnimation'
 import { translate } from '@/context/translationProvider'
 import RenderTickLottieFile from '@/lottiefiles'
 
-type VoucherItemProps = Coupon & { selected: number | number[] | null; onSelect: (id: number) => void; isReadOnlyMode: boolean }
-const VoucherItem: React.FC<VoucherItemProps> = ({ id, selected, onSelect, image, isReadOnlyMode, conditions, total_discount, end_date, type }) => {
+type VoucherItemProps = Coupon & { selected: number | number[] | null; onSelect: (id: number) => void; isReadOnlyMode: boolean; can_apply: boolean }
+const VoucherItem: React.FC<VoucherItemProps> = ({ id, selected, onSelect, image, isReadOnlyMode, conditions, total_discount, end_date, type, can_apply }) => {
   const t = translate('Home')
 
   const isHaveSelected = selected !== null
@@ -38,7 +38,10 @@ const VoucherItem: React.FC<VoucherItemProps> = ({ id, selected, onSelect, image
   }
 
   return (
-    <div onClick={() => onSelect(id)} className={`flex w-full items-center rounded-e-lg shadow-[8px_8px_16px_0px_#00000014] transition ${!isSelected && isHaveSelected ? 'opacity-50' : ''}`}>
+    <div
+      onClick={can_apply ? () => onSelect(id) : () => {}}
+      className={`flex w-full items-center rounded-e-lg shadow-[8px_8px_16px_0px_#00000014] transition ${!isSelected && isHaveSelected && !can_apply ? 'opacity-50' : ''}`}
+    >
       <div className='relative flex aspect-square size-[84px] flex-shrink-0'>
         {/* Voucher border  */}
         <div
@@ -65,7 +68,7 @@ const VoucherItem: React.FC<VoucherItemProps> = ({ id, selected, onSelect, image
         </div>
         <div className='relative'>
           {!isReadOnlyMode && (
-            <ButtonOnlyIcon onClick={() => onSelect(id)} disableAnimation>
+            <ButtonOnlyIcon onClick={can_apply ? () => onSelect(id) : () => {}} disableAnimation>
               {isSelected ? <RenderTickLottieFile className='size-8' /> : <AddCircle size={24} variant='Bold' className='text-primary-gray/50' />}
             </ButtonOnlyIcon>
           )}
