@@ -393,11 +393,13 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className='sticky bottom-0 left-0 right-0 z-50 flex items-center justify-center bg-white py-4'>
-        <Button isLoading={isAddingVoucher} onPress={handleToggleApplyVoucher} className='mx-auto mb-2 w-[90%] rounded-full bg-primary-yellow font-bold text-primary-black'>
-          {t?.text4}
-        </Button>
-      </div>
+      {!isReadOnlyMode && (
+        <div className='sticky bottom-0 left-0 right-0 z-50 flex items-center justify-center bg-white py-4'>
+          <Button isLoading={isAddingVoucher} onPress={handleToggleApplyVoucher} className='mx-auto mb-2 w-[90%] rounded-full bg-primary-yellow font-bold text-primary-black'>
+            {t?.text4}
+          </Button>
+        </div>
+      )}
     </div>
   )
 }
