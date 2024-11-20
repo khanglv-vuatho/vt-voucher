@@ -88,7 +88,7 @@ instance.interceptors.response.use(
         })
 
         if (error?.response?.data?.status === 401) {
-          window.location.href = '/invalid'
+          // window.location.href = '/invalid'
         }
       } else if (error?.request) {
         console.log('====== Timeout =====')
