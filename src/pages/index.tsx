@@ -113,6 +113,7 @@ const Home = () => {
       handleToastVoucherAdded()
     }
     const isVoucherExist = voucherData?.find((item: Coupon) => item?.code === searchValue)
+    if (isVoucherExist?.can_apply === false) return ToastComponent({ message: 'Voucher đã hết hạn hoặc không tồn tại', type: 'error' })
     if (isVoucherExist) {
       setVoucherData((prev) => [isVoucherExist, ...(prev?.filter((item) => item?.id !== isVoucherExist?.id) || [])])
       setSelectedVoucherId(isVoucherExist?.id)
@@ -122,7 +123,6 @@ const Home = () => {
     setIsSearching(true)
   }
 
-  console.log({ voucherData })
   const handleCallApiSearchVoucher = async () => {
     try {
       const data: Coupon = await getVouchers({ orderId, searchValue })
